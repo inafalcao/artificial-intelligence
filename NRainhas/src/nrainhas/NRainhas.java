@@ -1,14 +1,8 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-
-import java.util.ArrayList;
-import java.util.List;
+package nrainhas;
 
 /**
  *
- * @author 344079
+ * @author inafalcao
  */
 public class NRainhas {
 
@@ -18,8 +12,11 @@ public class NRainhas {
     public static void main(String[] args) {
 
         Tabuleiro tab = new Tabuleiro();
+        tab.posicionarRainhasIniciais();
         tab.printTabuleiro();
-        System.out.print(tab.contarConflitos(0, 1));
+        tab.geraProximoEstadoAleatoriamente();
+        tab.printTabuleiro();
+        //System.out.print(tab.contarConflitos(0, 1));
 
     }
 }
