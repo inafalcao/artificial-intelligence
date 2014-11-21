@@ -3,10 +3,10 @@
 #include <cstdio>
 #include <iostream>
 
-#define M_PI           		3.14159265358979323846  /* pi */
+#define M_PI           			3.14159265358979323846  /* pi */
 
-#define HIDDEN_LAYERS  		2
-#define W_INITIAL_VALUE  	0.1
+#define NEURON_COUNT  			3
+#define WEIGHTS_INITIAL_VALUE  	0.1
 
 using namespace std;
 
@@ -17,8 +17,12 @@ MLP::MLP(Matrix X, Matrix Y)
     : X(X), Y(Y)
 {
 	initializeW();
+	initializeM();
 	initializeXT();
 	initializeYT();
+
+	this->U.resize(NEURON_COUNT  , 1);
+	this->Z.resize(NEURON_COUNT+1, 1);
 }
 
 /* ==========================================================
@@ -77,27 +81,40 @@ bool MLP::run()
 }
 
 void MLP::initializeW() {
-	this->W.resize(this->X.rows() + 1, HIDDEN_LAYERS + 1);
+	this->W.resize(this->X.rows() + 1, NEURON_COUNT);
 
-	int elementCount = (this->X.rows() + 1) * (HIDDEN_LAYERS + 1);
+	int elementCount = (this->X.rows() + 1) * (NEURON_COUNT);
 	for(elementCount; elementCount > 0; elementCount--) {
-		W >> W_INITIAL_VALUE;
+		W >> WEIGHTS_INITIAL_VALUE;
 	}
 
 	//cout << this->W;
 }
 
+void MLP::initializeM() {
+	this->M.resize(this->X.rows() + 1, NEURON_COUNT);
+
+	int elementCount = (this->X.rows() + 1) * (NEURON_COUNT);
+	for(elementCount; elementCount > 0; elementCount--) {
+		M >> WEIGHTS_INITIAL_VALUE;
+	}
+
+	//cout << this->M;
+}
+
 void MLP::initializeXT() {
 	// Get 70% of the X
 	int XTLines = this->X.lines() * 0.7;
+	int XTRows = this->X.rows();
 
 	// XT has 70% of the lines of X, and the same rows
-	this->XT.resize(XTLines, this->X.rows());
+	this->XT.resize(XTLines, XTRows);
 
-	int lines = 0;
-	for(lines; lines < XTLines; lines++) {
-		int rows = 0;
-		for(rows; rows < this->X.rows(); rows++) {
+	int lines = 1;
+	int rows = 1;
+	for(lines; lines <= XTLines; lines++) {
+		rows = 1;
+		for(rows; rows <= XTRows; rows++) {
 			XT >> this->X.get(lines, rows);
 		}
 	}
@@ -112,10 +129,9 @@ void MLP::initializeYT() {
 	// YT has 70% of the lines of Y, and the same rows
 	this->YT.resize(YTLines, this->Y.rows());
 
-	int lines = 0;
-	for(lines; lines < YTLines; lines++) {
-		int rows = 0;
-		XT >> this->X.get(lines, this->Y.rows()-1);
+	int lines = 1;
+	for(lines; lines <=YTLines; lines++) {
+		YT >> this->Y.get(lines, this->Y.rows());
 	}
 
 	//cout << this->YT;

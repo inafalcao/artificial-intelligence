@@ -44,9 +44,11 @@ public:
     ========================================================== */
     bool run();
 
-    // Initialize W's matrix with values between [0, 0.1]
+    // Initialize W's and M's weights matrices with values between [0, 0.1]
     void initializeW();
+    void initializeM();
 
+    // Initialize training matrices
     void initializeXT();
     void initializeYT();
 
