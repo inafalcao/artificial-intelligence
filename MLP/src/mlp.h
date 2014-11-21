@@ -52,6 +52,8 @@ public:
     void initializeXT();
     void initializeYT();
 
+    void randomizeTraining();
+
 private:
 
     Matrix X;             // The total X's Matrix

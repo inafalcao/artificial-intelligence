@@ -2,8 +2,7 @@
 #include <cmath>
 #include <cstdio>
 #include <iostream>
-
-#define M_PI           			3.14159265358979323846  /* pi */
+#include <stdlib.h>     		/* srand, rand */
 
 #define NEURON_COUNT  			3
 #define WEIGHTS_INITIAL_VALUE  	0.1
@@ -23,6 +22,8 @@ MLP::MLP(Matrix X, Matrix Y)
 
 	this->U.resize(NEURON_COUNT  , 1);
 	this->Z.resize(NEURON_COUNT+1, 1);
+
+	randomizeTraining();
 }
 
 /* ==========================================================
@@ -135,4 +136,45 @@ void MLP::initializeYT() {
 	}
 
 	//cout << this->YT;
+}
+
+void MLP::randomizeTraining() {
+  	srand (time(NULL)); // initialize random seed.
+	int lineCount = this->X.lines() * 0.7;
+
+	// Lines to switch
+	int line1 = 0;
+	int line2 = 0;
+
+	// Switch lines 70% times
+	int switchNumber = lineCount;
+	for(switchNumber; switchNumber > 0; switchNumber--) {
+		// Choose lines to switch
+		line1 = rand() % lineCount + 1;
+		line2 = line1;
+		while(line1 == line2) {
+			line2 = rand() % lineCount + 1;
+		}
+
+		// Switch in XT
+		int xRowCount = this->X.rows();
+		for (xRowCount; xRowCount > 0; xRowCount--)
+		{
+			// Switch row by row elements of the lines
+			double aux;
+			aux = this->XT.get(line1, xRowCount);
+			this->XT.put(this->XT.get(line2, xRowCount), line1, xRowCount);
+			this->XT.put(aux, line2, xRowCount);
+		}
+
+		// Switch in YT
+		double aux;
+		aux = this->YT.get(line1, 1);
+		this->YT.put(this->YT.get(line2, 1), line1, 1);
+		this->YT.put(aux, line2, 1);
+		
+	}
+
+	//cout << this->YT;
+
 }
