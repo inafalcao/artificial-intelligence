@@ -6,7 +6,7 @@
 #include <fstream>
 
 #include "sample-reader.h"
-#include "neuron.h"
+#include "mlp.h"
 
 using namespace std;
 
@@ -16,8 +16,8 @@ int main(int argc, char *argv[])
     SampleReader *sampleReader = new SampleReader();
     sampleReader->readSamplesFromFile(argv[1]);
 
-    Neuron neuron ( sampleReader->getX(), sampleReader->getY());
-    neuron.run();
+    MLP mlp (sampleReader->getX(), sampleReader->getY());
+    mlp.run();
 
     cout << endl << "Multilayer Perceptron" << endl;
 

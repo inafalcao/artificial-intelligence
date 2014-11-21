@@ -48,8 +48,6 @@ bool SampleReader::readSamplesFromFile(const char* filePath)
 
         this->X.resize(X_SAMPLES_LINES, X_SAMPLES_ROWS);
         this->Y.resize(X_SAMPLES_LINES, 1);
-
-        vector <double>  data;
        
 
         // Reads the body (points)
@@ -72,46 +70,32 @@ bool SampleReader::readSamplesFromFile(const char* filePath)
 
               count++;
 
-              cout << count << "-";
-              if(count > 1 && count < 10) {
+              
+              if(count > 1 && count <= 10) {
                 X >> x;
               }
 
-              if(count == 10) {
-                Y >> x;
+              if(count > 10) {
+                if(x == 2) // 2 is benign
+                  Y >> 0;
+                else
+                  Y >> 1; // 
                 count = 0;
               }
-                
 
-              //cout << x << " - ";
             }
-
-            
-            data.empty();
-
-            
-            // Reading 10 values of x.
-            /*for(int i = 1; i <= 9; i++) {
-                sampleFile >> x;
-                
-                X >> x;
-                sampleFile >> coma;
-            }*/
-
-            // Reading y
-            //sampleFile >> y;
-            //Y >> y;
         }
 
         // Feedback
-        cout << endl
+        /*cout << endl
              << ""
              << "===============================================" << endl
              << "X matrix"                                        << endl
-             //<< std::setw(2) <<  X                                << endl << endl
+             << std::setw(2) <<  X                                << endl << endl
              << "===============================================" << endl
              << "Y matrix"                                        << endl
-             << "===============================================" << endl;
+             << std::setw(2) <<  Y                                << endl << endl
+             << "===============================================" << endl;*/
     }
     else
     {

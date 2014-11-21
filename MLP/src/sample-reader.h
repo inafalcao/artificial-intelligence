@@ -43,18 +43,18 @@ private:
      *   X's matrix.
      *   The x's are positioned as folows:
      *
-     *   1|x11 x12 x13 ...  x10|
-     *   2|x21 x22 x23 ...  x10|
-     *    |...                 |
-     *   n|xn1 xn2 xn3 ... xn10|
+     *   1|x11 x12 x13 ...  x9|
+     *   2|x21 x22 x23 ...  x9|
+     *    |...                |
+     *   n|xn1 xn2 xn3 ... xn9|
      *
     */
     Matrix X;
 
     /**
      *   Y's matrix.
-     *   Y can be 2 or 4
-     *   (2 for benign, 4 for malignant)
+     *   Y can be 1 or 0
+     *   (0 for benign, 1 for malignant)
     */
     Matrix Y;
 
