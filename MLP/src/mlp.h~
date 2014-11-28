@@ -71,8 +71,6 @@ public:
 
     void updateM(int i);
     void updateW(int i);
-    
-    void normalizarX();
 
 private:
 
